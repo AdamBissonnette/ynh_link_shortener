@@ -1,0 +1,35 @@
+#!/bin/bash
+
+source /usr/share/yunohost/helpers
+
+#=================================================
+# STOP AND REMOVE SERVICE
+#=================================================
+ynh_script_progression "Stopping and removing the systemd service..."
+
+ynh_systemctl --service="$app" --action="stop"
+
+yunohost service remove "$app"
+
+ynh_config_remove_systemd
+
+#=================================================
+# REMOVE NGINX CONFIGURATION
+#=================================================
+ynh_script_progression "Removing nginx configuration..."
+
+ynh_config_remove_nginx
+
+#=================================================
+# REMOVE VARIOUS FILES
+#=================================================
+ynh_script_progression "Removing various files..."
+
+# Remove any log files or data directories if they exist outside install_dir
+# ynh_safe_rm --file="/var/log/$app"
+
+#=================================================
+# END OF SCRIPT
+#=================================================
+
+ynh_script_progression "Removal of $app completed"

@@ -1,0 +1,109 @@
+#!/bin/bash
+
+source /usr/share/yunohost/helpers
+
+#=================================================
+# INSTALL DEPENDENCIES
+#=================================================
+ynh_script_progression "Installing Node.js..."
+
+# Node.js version is automatically handled by the nodejs resource in manifest.toml
+
+#=================================================
+# DOWNLOAD, CHECK AND UNPACK SOURCE
+#=================================================
+ynh_script_progression "Setting up application files..."
+
+# Copy link_shortener source to install directory
+# This assumes the link_shortener source is in an 'app/' directory
+# during packaging, or use ynh_setup_source for remote downloads
+cp -r ../app/* "$install_dir/"
+
+#=================================================
+# INSTALL NODE.JS DEPENDENCIES AND BUILD
+#=================================================
+ynh_script_progression "Installing Node.js dependencies..."
+
+pushd "$install_dir"
+    # Install all dependencies (including devDependencies for TypeScript build)
+    ynh_hide_warnings ynh_exec_as_app npm install
+    
+    # Build TypeScript to JavaScript
+    ynh_script_progression "Building TypeScript application..."
+    ynh_hide_warnings ynh_exec_as_app npm run build
+    
+    # Remove devDependencies after build to save space
+    ynh_hide_warnings ynh_exec_as_app npm prune --production
+popd
+
+#=================================================
+# ADD A CONFIGURATION
+#=================================================
+ynh_script_progression "Adding $app's configuration files..."
+
+# Create data directory for SQLite database
+mkdir -p "$install_dir/data"
+
+# Create .env file with YunoHost configuration
+cat > "$install_dir/.env" <<EOF
+# Server Configuration
+PORT=$port
+
+# Admin Authentication
+ADMIN_PASSWORD=$admin_password
+
+# Comma-separated list of IPs allowed to access admin endpoints
+# YunoHost reverse proxy will pass the real IP via X-Forwarded-For
+ALLOWED_ADMIN_IPS=*
+
+# Admin UI path
+ADMIN_PATH=$admin_path
+
+# Root redirect target
+ROOT_REDIRECT=$root_redirect
+
+# Unknown paths redirect here
+NOT_FOUND_REDIRECT=$not_found_redirect
+
+# Session window (minutes)
+SESSION_WINDOW_MIN=30
+
+# User cookie lifetime (days)
+USER_COOKIE_MAX_DAYS=730
+
+# Secure cookies (HTTPS)
+COOKIE_SECURE=true
+
+# Rate limit window (seconds)
+RATE_LIMIT_WINDOW=60
+EOF
+
+chmod -R o-rwx "$install_dir"
+chown -R "$app:www-data" "$install_dir"
+
+#=================================================
+# SYSTEM CONFIGURATION
+#=================================================
+ynh_script_progression "Adding system configurations related to $app..."
+
+# Add nginx configuration
+ynh_config_add_nginx
+
+# Add systemd service
+ynh_config_add_systemd
+
+# Register the service in YunoHost
+yunohost service add "$app" --description="Node.js application"
+
+#=================================================
+# START SYSTEMD SERVICE
+#=================================================
+ynh_script_progression "Starting $app's systemd service..."
+
+ynh_systemctl --service="$app" --action="start"
+
+#=================================================
+# END OF SCRIPT
+#=================================================
+
+ynh_script_progression "Installation of $app completed"

@@ -1,0 +1,19 @@
+# YunoHost CI configuration
+# This file defines automated tests for the app
+
+test_format = 1.0
+
+[default]
+
+    # --- Environments to test against ---
+    # These are the YunoHost versions the app will be tested against
+    test_upgrade_from.nodejs_app_template.name = "Testing fresh install"
+    
+    # --- Test parameters ---
+    # This allows testing with different installation parameters
+    
+    args.domain = "domain.tld"
+    args.path = "/test"
+    args.init_main_permission = "visitors"
+    args.node_version = "20"
+    args.app_port = "3000"

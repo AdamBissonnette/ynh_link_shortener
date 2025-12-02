@@ -1,0 +1,97 @@
+#:schema https://raw.githubusercontent.com/YunoHost/apps/master/schemas/manifest.v2.schema.json
+
+packaging_format = 2
+
+id = "link_shortener"
+name = "Link Shortener"
+description.en = "High-performance link shortening and analytics tracking service"
+description.fr = "Service de raccourcissement de liens haute performance avec suivi analytique"
+
+version = "1.0.0~ynh1"
+
+maintainers = ["adam"]
+
+[upstream]
+license = "MIT"
+website = "https://github.com/yourusername/link_shortener"
+admindoc = "https://github.com/yourusername/link_shortener/blob/main/README.md"
+userdoc = "https://github.com/yourusername/link_shortener/blob/main/docs/QUICKSTART.md"
+code = "https://github.com/yourusername/link_shortener"
+
+[integration]
+yunohost = ">= 12.1.17"
+helpers_version = "2.1"
+architectures = "all"
+multi_instance = true
+
+ldap = false
+sso = false
+
+disk = "100M"
+ram.build = "500M"
+ram.runtime = "150M"
+
+[install]
+    [install.domain]
+    type = "domain"
+
+    [install.path]
+    type = "path"
+    default = "/"
+
+    [install.init_main_permission]
+    help.en = "Set to 'visitors' for public access (recommended for link shortener)"
+    help.fr = "Définir sur 'visitors' pour un accès public (recommandé pour raccourcisseur de liens)"
+    type = "group"
+    default = "visitors"
+
+    [install.admin_password]
+    ask.en = "Admin password for the web interface"
+    ask.fr = "Mot de passe admin pour l'interface web"
+    type = "password"
+    help.en = "Password to access the admin dashboard"
+    help.fr = "Mot de passe pour accéder au tableau de bord admin"
+
+    [install.admin_path]
+    ask.en = "Admin interface path"
+    ask.fr = "Chemin de l'interface admin"
+    type = "string"
+    default = "/derp"
+    help.en = "URL path for admin interface (e.g., /admin or /derp for obscurity)"
+    help.fr = "Chemin URL pour l'interface admin (ex: /admin ou /derp pour l'obscurité)"
+
+    [install.root_redirect]
+    ask.en = "Root redirect URL"
+    ask.fr = "URL de redirection racine"
+    type = "string"
+    default = "https://example.com"
+    help.en = "Where to redirect requests to / (your main website)"
+    help.fr = "Où rediriger les requêtes vers / (votre site principal)"
+
+    [install.not_found_redirect]
+    ask.en = "404 redirect URL"
+    ask.fr = "URL de redirection 404"
+    type = "string"
+    default = "https://example.com"
+    help.en = "Where to redirect unknown short links"
+    help.fr = "Où rediriger les liens courts inconnus"
+
+[resources]
+    # If your app needs to download source from GitHub/URL, configure this:
+    # [resources.sources.main]
+    # url = "https://github.com/username/repo/archive/refs/tags/v1.0.0.tar.gz"
+    # sha256 = "checksum_here"
+    # autoupdate.strategy = "latest_github_release"
+
+    [resources.system_user]
+
+    [resources.install_dir]
+
+    [resources.permissions]
+    main.url = "/"
+
+    [resources.ports]
+    main.default = 3000
+
+    [resources.nodejs]
+    version = "20"

@@ -1,0 +1,37 @@
+#!/bin/bash
+
+source /usr/share/yunohost/helpers
+
+#=================================================
+# STOP SYSTEMD SERVICE
+#=================================================
+ynh_script_progression "Stopping $app's systemd service..."
+
+ynh_systemctl --service="$app" --action="stop"
+
+#=================================================
+# MODIFY URL IN NGINX CONF
+#=================================================
+ynh_script_progression "Updating nginx configuration..."
+
+ynh_config_change_url_nginx
+
+#=================================================
+# UPDATE CONFIGURATION
+#=================================================
+# If your app stores the domain/path in a config file, update it here
+# ynh_script_progression "Updating $app's configuration..."
+# ynh_config_add --template="config.json" --destination="$install_dir/config/config.json"
+
+#=================================================
+# START SYSTEMD SERVICE
+#=================================================
+ynh_script_progression "Starting $app's systemd service..."
+
+ynh_systemctl --service="$app" --action="start"
+
+#=================================================
+# END OF SCRIPT
+#=================================================
+
+ynh_script_progression "Change of URL completed for $app"

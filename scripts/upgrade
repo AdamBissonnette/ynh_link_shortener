@@ -1,0 +1,73 @@
+#!/bin/bash
+
+source /usr/share/yunohost/helpers
+
+#=================================================
+# STOP SYSTEMD SERVICE
+#=================================================
+ynh_script_progression "Stopping $app's systemd service..."
+
+ynh_systemctl --service="$app" --action="stop"
+
+#=================================================
+# DOWNLOAD, CHECK AND UNPACK SOURCE
+#=================================================
+# If your app source changes, download the new version:
+# ynh_script_progression "Upgrading source files..."
+# ynh_setup_source --dest_dir="$install_dir" --keep=".env data/"
+
+#=================================================
+# UPGRADE NODE.JS DEPENDENCIES AND REBUILD
+#=================================================
+ynh_script_progression "Upgrading Node.js dependencies..."
+
+pushd "$install_dir"
+    # Install all dependencies (including devDependencies for TypeScript build)
+    ynh_hide_warnings ynh_exec_as_app npm install
+    
+    # Rebuild TypeScript to JavaScript
+    ynh_script_progression "Rebuilding TypeScript application..."
+    ynh_hide_warnings ynh_exec_as_app npm run build
+    
+    # Remove devDependencies after build to save space
+    ynh_hide_warnings ynh_exec_as_app npm prune --production
+popd
+
+#=================================================
+# UPDATE A CONFIGURATION
+#=================================================
+ynh_script_progression "Updating configuration..."
+
+# The .env file is preserved during upgrade
+# You may want to update it with new settings if needed
+# but preserve existing values
+
+# Ensure data directory exists
+mkdir -p "$install_dir/data"
+
+chmod -R o-rwx "$install_dir"
+chown -R "$app:www-data" "$install_dir"
+
+#=================================================
+# REAPPLY SYSTEM CONFIGURATIONS
+#=================================================
+ynh_script_progression "Upgrading system configurations related to $app..."
+
+ynh_config_add_nginx
+
+ynh_config_add_systemd
+
+yunohost service add "$app" --description="Link Shortener Service"
+
+#=================================================
+# START SYSTEMD SERVICE
+#=================================================
+ynh_script_progression "Starting $app's systemd service..."
+
+ynh_systemctl --service="$app" --action="start"
+
+#=================================================
+# END OF SCRIPT
+#=================================================
+
+ynh_script_progression "Upgrade of $app completed"
