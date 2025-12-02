@@ -3,8 +3,15 @@
 source /usr/share/yunohost/helpers
 
 #=================================================
-# INITIALIZE VARIABLES WITH DEFAULTS
+# RETRIEVE ARGUMENTS FROM THE MANIFEST
 #=================================================
+
+# Variables from install questions are automatically set:
+# - admin_password
+# - admin_path  
+# - root_redirect
+# - not_found_redirect
+
 # Set defaults for variables not in install questions
 allowed_admin_ips="*"
 session_window_min="30"
