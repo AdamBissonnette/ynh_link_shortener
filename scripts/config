@@ -15,35 +15,43 @@ action=${1:-show}
 
 get__admin_password() {
     # Read current password from .env file
-    grep "^ADMIN_PASSWORD=" "$install_dir/.env" | cut -d'=' -f2- || echo ""
+    local value=$(grep "^ADMIN_PASSWORD=" "$install_dir/.env" | cut -d'=' -f2-)
+    echo "${value:-}"
 }
 
 get__allowed_admin_ips() {
-    grep "^ALLOWED_ADMIN_IPS=" "$install_dir/.env" | cut -d'=' -f2- || echo "*"
+    local value=$(grep "^ALLOWED_ADMIN_IPS=" "$install_dir/.env" | cut -d'=' -f2-)
+    echo "${value:-*}"
 }
 
 get__admin_path() {
-    grep "^ADMIN_PATH=" "$install_dir/.env" | cut -d'=' -f2- || echo "/derp"
+    local value=$(grep "^ADMIN_PATH=" "$install_dir/.env" | cut -d'=' -f2-)
+    echo "${value:-/derp}"
 }
 
 get__root_redirect() {
-    grep "^ROOT_REDIRECT=" "$install_dir/.env" | cut -d'=' -f2- || echo "https://example.com"
+    local value=$(grep "^ROOT_REDIRECT=" "$install_dir/.env" | cut -d'=' -f2-)
+    echo "${value:-https://example.com}"
 }
 
 get__not_found_redirect() {
-    grep "^NOT_FOUND_REDIRECT=" "$install_dir/.env" | cut -d'=' -f2- || echo "https://example.com"
+    local value=$(grep "^NOT_FOUND_REDIRECT=" "$install_dir/.env" | cut -d'=' -f2-)
+    echo "${value:-https://example.com}"
 }
 
 get__session_window_min() {
-    grep "^SESSION_WINDOW_MIN=" "$install_dir/.env" | cut -d'=' -f2- || echo "30"
+    local value=$(grep "^SESSION_WINDOW_MIN=" "$install_dir/.env" | cut -d'=' -f2-)
+    echo "${value:-30}"
 }
 
 get__user_cookie_max_days() {
-    grep "^USER_COOKIE_MAX_DAYS=" "$install_dir/.env" | cut -d'=' -f2- || echo "730"
+    local value=$(grep "^USER_COOKIE_MAX_DAYS=" "$install_dir/.env" | cut -d'=' -f2-)
+    echo "${value:-730}"
 }
 
 get__cookie_secure() {
-    value=$(grep "^COOKIE_SECURE=" "$install_dir/.env" | cut -d'=' -f2- || echo "true")
+    local value=$(grep "^COOKIE_SECURE=" "$install_dir/.env" | cut -d'=' -f2-)
+    value=${value:-true}
     if [ "$value" = "true" ]; then
         echo "1"
     else
@@ -52,7 +60,8 @@ get__cookie_secure() {
 }
 
 get__rate_limit_window() {
-    grep "^RATE_LIMIT_WINDOW=" "$install_dir/.env" | cut -d'=' -f2- || echo "60"
+    local value=$(grep "^RATE_LIMIT_WINDOW=" "$install_dir/.env" | cut -d'=' -f2-)
+    echo "${value:-60}"
 }
 
 #=================================================
@@ -153,8 +162,5 @@ set__rate_limit_window() {
 
 # If any setting changed, restart the service
 if [ "${needs_restart:-0}" -eq 1 ]; then
-    ynh_script_progression "Restarting $app service..."
     ynh_systemctl --service="$app" --action=restart
 fi
-
-ynh_app_config_run "$1"
