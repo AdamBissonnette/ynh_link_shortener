@@ -325,7 +325,7 @@ Edit `conf/systemd.service` sandboxing directives (lines 29-53).
 
 ## Links and References
 
-- **Base Application**: `../link_shortener/` or https://github.com/yourusername/link_shortener
+- **Base Application**: `../link_shortener/` or https://github.com/AdamBissonnette/link_shortener
 - **YunoHost Docs**: https://yunohost.org/packaging_apps
 - **Manifest Schema**: https://github.com/YunoHost/apps/blob/master/schemas/manifest.v2.schema.json
 - **Helpers Reference**: https://yunohost.org/packaging_apps_helpers
@@ -351,10 +351,10 @@ When the link_shortener app is updated:
 
 ```bash
 # Download and hash in one command
-wget https://github.com/yourusername/link_shortener/archive/refs/tags/v1.0.0.tar.gz -O- | sha256sum
+wget https://github.com/AdamBissonnette/link_shortener/archive/refs/tags/v1.0.0.tar.gz -O- | sha256sum
 
 # Or download first, then hash
-wget https://github.com/yourusername/link_shortener/archive/refs/tags/v1.0.0.tar.gz
+wget https://github.com/AdamBissonnette/link_shortener/archive/refs/tags/v1.0.0.tar.gz
 sha256sum v1.0.0.tar.gz
 ```
 

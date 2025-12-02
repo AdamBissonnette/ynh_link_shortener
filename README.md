@@ -34,7 +34,7 @@ Link Shortener is a TypeScript-based application that provides fast URL shorteni
 ### Using Command Line
 
 ```bash
-sudo yunohost app install https://github.com/yourusername/ynh_link_shortener
+sudo yunohost app install https://github.com/AdamBissonnette/ynh_link_shortener
 ```
 
 Or, if you have a local copy:
@@ -107,7 +107,7 @@ View analytics in the admin interface:
 ## Documentation
 
 - [Admin Guide](./doc/ADMIN.md) - Detailed admin documentation
-- [Original App Docs](https://github.com/yourusername/link_shortener) - Full documentation of the base application
+- [Original App Docs](https://github.com/AdamBissonnette/link_shortener) - Full documentation of the base application
 
 ## Architecture
 
@@ -213,8 +213,8 @@ Yes - you can install multiple instances of Link Shortener on different domains 
 
 ## Links
 
-- **Report a bug**: https://github.com/yourusername/ynh_link_shortener/issues
-- **App website**: https://github.com/yourusername/link_shortener
+- **Report a bug**: https://github.com/AdamBissonnette/ynh_link_shortener/issues
+- **App website**: https://github.com/AdamBissonnette/link_shortener
 - **YunoHost website**: https://yunohost.org/
 
 ## License
