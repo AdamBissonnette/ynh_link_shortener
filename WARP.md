@@ -1,10 +1,25 @@
-# WARP.md - Link Shortener YunoHost Package
+# WARP.md
 
-This file provides guidance to WARP (warp.dev) when working with this YunoHost application package.
+This file provides guidance to WARP (warp.dev) when working with code in this repository.
 
 ## Project Overview
 
 This is a YunoHost packaging of the Link Shortener application - a high-performance TypeScript-based link shortening and analytics service. The package adapts the standalone link_shortener application to run seamlessly within the YunoHost ecosystem.
+
+## Working in This Repository
+
+**Two Development Contexts:**
+
+1. **Root directory** (`/`) - YunoHost packaging files (manifest, scripts, configs)
+   - Work here when modifying installation, upgrade, or YunoHost integration
+   - Cannot be fully tested on macOS (requires YunoHost instance)
+
+2. **App directory** (`app/`) - Link shortener application source code
+   - Work here when modifying application features, endpoints, or UI
+   - Can be tested locally on macOS
+   - Has its own `app/WARP.md` with development commands
+
+**When working on app code**: Always `cd app/` first and refer to `app/WARP.md` for local development commands.
 
 ## Architecture
 
@@ -12,9 +27,10 @@ This is a YunoHost packaging of the Link Shortener application - a high-performa
 - **Language**: TypeScript (compiled to JavaScript)
 - **Runtime**: Node.js 20
 - **Framework**: Express.js
-- **Database**: SQLite (better-sqlite3)
+- **Database**: SQLite (better-sqlite3) with WAL mode for concurrency
 - **Build Process**: TypeScript compilation via `npm run build`
-- **Entry Point**: `dist/server.js` (compiled from `src/server.ts`)
+- **Entry Point**: `dist/server.js` (compiled from `app/src/server.ts`)
+- **Database Schema**: Defined in `app/src/db.ts` (auto-migrates on startup)
 
 ### YunoHost Integration
 - **Packaging Format**: 2.0
@@ -27,13 +43,6 @@ This is a YunoHost packaging of the Link Shortener application - a high-performa
 
 ```
 ynh_link_shortener/
-├── app/                      # Link shortener source code (copied during packaging)
-│   ├── src/                  # TypeScript source
-│   │   ├── server.ts         # Main application
-│   │   └── db.ts             # Database schema
-│   ├── public/               # Static files (admin UI, tracking script)
-│   ├── package.json          # Dependencies
-│   └── tsconfig.json         # TypeScript config
 ├── scripts/                  # YunoHost lifecycle scripts
 │   ├── install               # Installation script
 │   ├── upgrade               # Upgrade script
@@ -47,9 +56,13 @@ ynh_link_shortener/
 ├── doc/                      # Documentation
 │   ├── DESCRIPTION.md        # Brief description for catalog
 │   └── ADMIN.md              # Admin documentation
-├── manifest.toml             # YunoHost app manifest
+├── manifest.toml             # YunoHost app manifest (includes source URL)
+├── tests.toml                # CI test configuration
 ├── README.md                 # Package documentation
 └── WARP.md                   # This file
+
+Note: The link_shortener application source code is NOT bundled in this repo.
+It is downloaded from GitHub during installation via ynh_setup_source.
 ```
 
 ## Installation Flow
@@ -221,12 +234,26 @@ You cannot fully test YunoHost packaging on macOS. However, you can:
 ```bash
 cd app/
 npm install
-npm run build
-npm start
+cp .env.example .env
+# Edit .env to set ADMIN_PASSWORD and other settings
+npm run build      # Compile TypeScript
+npm start          # Run in production mode
+# OR
+npm run dev        # Development mode with ts-node
 # Visit http://localhost:3000
 ```
 
-2. **Validate manifest**:
+2. **Use the admin CLI** (requires `jq`):
+```bash
+cd app/
+chmod +x admin-cli.sh
+export API_URL=http://localhost:3000
+export ADMIN_PASSWORD=changeme
+./admin-cli.sh add test https://example.com
+./admin-cli.sh list
+```
+
+3. **Validate manifest**:
 ```bash
 # Use online validator or YunoHost test instance
 ```

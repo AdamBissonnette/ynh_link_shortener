@@ -12,9 +12,8 @@ ynh_systemctl --service="$app" --action="stop"
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
 #=================================================
-# If your app source changes, download the new version:
-# ynh_script_progression "Upgrading source files..."
-# ynh_setup_source --dest_dir="$install_dir" --keep=".env data/"
+ynh_script_progression "Upgrading source files..."
+ynh_setup_source --dest_dir="$install_dir" --keep=".env data/"
 
 #=================================================
 # UPGRADE NODE.JS DEPENDENCIES AND REBUILD

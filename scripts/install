@@ -14,10 +14,8 @@ ynh_script_progression "Installing Node.js..."
 #=================================================
 ynh_script_progression "Setting up application files..."
 
-# Copy link_shortener source to install directory
-# This assumes the link_shortener source is in an 'app/' directory
-# during packaging, or use ynh_setup_source for remote downloads
-cp -r ../app/* "$install_dir/"
+# Download and extract source from GitHub
+ynh_setup_source --dest_dir="$install_dir"
 
 #=================================================
 # INSTALL NODE.JS DEPENDENCIES AND BUILD

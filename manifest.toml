@@ -77,11 +77,10 @@ ram.runtime = "150M"
     help.fr = "Où rediriger les liens courts inconnus"
 
 [resources]
-    # If your app needs to download source from GitHub/URL, configure this:
-    # [resources.sources.main]
-    # url = "https://github.com/username/repo/archive/refs/tags/v1.0.0.tar.gz"
-    # sha256 = "checksum_here"
-    # autoupdate.strategy = "latest_github_release"
+    [resources.sources.main]
+    url = "https://github.com/yourusername/link_shortener/archive/refs/tags/v1.0.0.tar.gz"
+    sha256 = "REPLACE_WITH_ACTUAL_SHA256"
+    autoupdate.strategy = "latest_github_release"
 
     [resources.system_user]
 
