@@ -45,37 +45,6 @@ ram.runtime = "150M"
     type = "group"
     default = "visitors"
 
-    [install.admin_password]
-    ask.en = "Admin password for the web interface"
-    ask.fr = "Mot de passe admin pour l'interface web"
-    type = "password"
-    help.en = "Password to access the admin dashboard"
-    help.fr = "Mot de passe pour accéder au tableau de bord admin"
-
-    [install.admin_path]
-    ask.en = "Admin interface path"
-    ask.fr = "Chemin de l'interface admin"
-    type = "string"
-    default = "/webadmin"
-    help.en = "URL path for admin interface (e.g., /admin or /webadmin for obscurity)"
-    help.fr = "Chemin URL pour l'interface admin (ex: /admin ou /webadmin pour l'obscurité)"
-
-    [install.root_redirect]
-    ask.en = "Root redirect URL"
-    ask.fr = "URL de redirection racine"
-    type = "string"
-    default = "https://example.com"
-    help.en = "Where to redirect requests to / (your main website)"
-    help.fr = "Où rediriger les requêtes vers / (votre site principal)"
-
-    [install.not_found_redirect]
-    ask.en = "404 redirect URL"
-    ask.fr = "URL de redirection 404"
-    type = "string"
-    default = "https://example.com"
-    help.en = "Where to redirect unknown short links"
-    help.fr = "Où rediriger les liens courts inconnus"
-
 [resources]
     [resources.sources.main]
     url = "https://github.com/AdamBissonnette/linkshortener/archive/refs/tags/v1.0.0.tar.gz"
