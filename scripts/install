@@ -20,7 +20,6 @@ session_window_min="30"
 user_cookie_max_days="730"
 cookie_secure="1"
 rate_limit_window="60"
-rate_limit_window="60"
 
 #=================================================
 # INSTALL DEPENDENCIES
