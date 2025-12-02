@@ -14,54 +14,39 @@ action=${1:-show}
 #=================================================
 
 get__admin_password() {
-    # Read current password from .env file
-    local value=$(grep "^ADMIN_PASSWORD=" "$install_dir/.env" | cut -d'=' -f2-)
-    echo "${value:-}"
+    ynh_app_setting_get --app="$app" --key=admin_password
 }
 
 get__allowed_admin_ips() {
-    local value=$(grep "^ALLOWED_ADMIN_IPS=" "$install_dir/.env" | cut -d'=' -f2-)
-    echo "${value:-*}"
+    ynh_app_setting_get --app="$app" --key=allowed_admin_ips
 }
 
 get__admin_path() {
-    local value=$(grep "^ADMIN_PATH=" "$install_dir/.env" | cut -d'=' -f2-)
-    echo "${value:-/derp}"
+    ynh_app_setting_get --app="$app" --key=admin_path
 }
 
 get__root_redirect() {
-    local value=$(grep "^ROOT_REDIRECT=" "$install_dir/.env" | cut -d'=' -f2-)
-    echo "${value:-https://example.com}"
+    ynh_app_setting_get --app="$app" --key=root_redirect
 }
 
 get__not_found_redirect() {
-    local value=$(grep "^NOT_FOUND_REDIRECT=" "$install_dir/.env" | cut -d'=' -f2-)
-    echo "${value:-https://example.com}"
+    ynh_app_setting_get --app="$app" --key=not_found_redirect
 }
 
 get__session_window_min() {
-    local value=$(grep "^SESSION_WINDOW_MIN=" "$install_dir/.env" | cut -d'=' -f2-)
-    echo "${value:-30}"
+    ynh_app_setting_get --app="$app" --key=session_window_min
 }
 
 get__user_cookie_max_days() {
-    local value=$(grep "^USER_COOKIE_MAX_DAYS=" "$install_dir/.env" | cut -d'=' -f2-)
-    echo "${value:-730}"
+    ynh_app_setting_get --app="$app" --key=user_cookie_max_days
 }
 
 get__cookie_secure() {
-    local value=$(grep "^COOKIE_SECURE=" "$install_dir/.env" | cut -d'=' -f2-)
-    value=${value:-true}
-    if [ "$value" = "true" ]; then
-        echo "1"
-    else
-        echo "0"
-    fi
+    ynh_app_setting_get --app="$app" --key=cookie_secure
 }
 
 get__rate_limit_window() {
-    local value=$(grep "^RATE_LIMIT_WINDOW=" "$install_dir/.env" | cut -d'=' -f2-)
-    echo "${value:-60}"
+    ynh_app_setting_get --app="$app" --key=rate_limit_window
 }
 
 #=================================================
@@ -105,43 +90,49 @@ validate__rate_limit_window() {
 #=================================================
 
 set__admin_password() {
+    ynh_app_setting_set --app="$app" --key=admin_password --value="$admin_password"
     ynh_write_var_in_file --file="$install_dir/.env" --key=ADMIN_PASSWORD --value="$admin_password"
-    
-    # Need to restart the service for changes to take effect
     needs_restart=1
 }
 
 set__allowed_admin_ips() {
+    ynh_app_setting_set --app="$app" --key=allowed_admin_ips --value="$allowed_admin_ips"
     ynh_write_var_in_file --file="$install_dir/.env" --key=ALLOWED_ADMIN_IPS --value="$allowed_admin_ips"
     needs_restart=1
 }
 
 set__admin_path() {
+    ynh_app_setting_set --app="$app" --key=admin_path --value="$admin_path"
     ynh_write_var_in_file --file="$install_dir/.env" --key=ADMIN_PATH --value="$admin_path"
     needs_restart=1
 }
 
 set__root_redirect() {
+    ynh_app_setting_set --app="$app" --key=root_redirect --value="$root_redirect"
     ynh_write_var_in_file --file="$install_dir/.env" --key=ROOT_REDIRECT --value="$root_redirect"
     needs_restart=1
 }
 
 set__not_found_redirect() {
+    ynh_app_setting_set --app="$app" --key=not_found_redirect --value="$not_found_redirect"
     ynh_write_var_in_file --file="$install_dir/.env" --key=NOT_FOUND_REDIRECT --value="$not_found_redirect"
     needs_restart=1
 }
 
 set__session_window_min() {
+    ynh_app_setting_set --app="$app" --key=session_window_min --value="$session_window_min"
     ynh_write_var_in_file --file="$install_dir/.env" --key=SESSION_WINDOW_MIN --value="$session_window_min"
     needs_restart=1
 }
 
 set__user_cookie_max_days() {
+    ynh_app_setting_set --app="$app" --key=user_cookie_max_days --value="$user_cookie_max_days"
     ynh_write_var_in_file --file="$install_dir/.env" --key=USER_COOKIE_MAX_DAYS --value="$user_cookie_max_days"
     needs_restart=1
 }
 
 set__cookie_secure() {
+    ynh_app_setting_set --app="$app" --key=cookie_secure --value="$cookie_secure"
     if [ "$cookie_secure" = "1" ]; then
         value="true"
     else
@@ -152,6 +143,7 @@ set__cookie_secure() {
 }
 
 set__rate_limit_window() {
+    ynh_app_setting_set --app="$app" --key=rate_limit_window --value="$rate_limit_window"
     ynh_write_var_in_file --file="$install_dir/.env" --key=RATE_LIMIT_WINDOW --value="$rate_limit_window"
     needs_restart=1
 }
