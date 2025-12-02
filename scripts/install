@@ -80,20 +80,6 @@ chmod -R o-rwx "$install_dir"
 chown -R "$app:www-data" "$install_dir"
 
 #=================================================
-# RETRIEVE ARGUMENTS FROM THE MANIFEST
-#=================================================
-
-admin_password=changeme
-allowed_admin_ips=*
-admin_path=cmd
-root_redirect=https://example.com
-not_found_redirect=https://example.com/404
-session_window_min=30
-user_cookie_max_days=730
-cookie_secure=1
-rate_limit_window=60
-
-#=================================================
 # STORE SETTINGS FOR CONFIG PANEL
 #=================================================
 ynh_app_setting_set --app="$app" --key=admin_password --value="$admin_password"
