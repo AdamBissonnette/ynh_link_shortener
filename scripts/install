@@ -3,6 +3,16 @@
 source /usr/share/yunohost/helpers
 
 #=================================================
+# INITIALIZE VARIABLES WITH DEFAULTS
+#=================================================
+# Set defaults for variables not in install questions
+allowed_admin_ips="*"
+session_window_min="30"
+user_cookie_max_days="730"
+cookie_secure="1"
+rate_limit_window="60"
+
+#=================================================
 # INSTALL DEPENDENCIES
 #=================================================
 ynh_script_progression "Installing Node.js..."
