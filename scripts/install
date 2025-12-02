@@ -6,17 +6,20 @@ source /usr/share/yunohost/helpers
 # RETRIEVE ARGUMENTS FROM THE MANIFEST
 #=================================================
 
-# Variables from install questions are automatically set:
-# - admin_password
-# - admin_path  
-# - root_redirect
-# - not_found_redirect
+# Explicitly set all variables (install questions provide some, we set defaults for others)
+# Variables from install questions: admin_password, admin_path, root_redirect, not_found_redirect
+# These should already be set by YunoHost, but we'll ensure they have fallbacks
+admin_password="${admin_password:-changeme}"
+admin_path="${admin_path:-/derp}"
+root_redirect="${root_redirect:-https://example.com}"
+not_found_redirect="${not_found_redirect:-https://example.com}"
 
-# Set defaults for variables not in install questions
+# Variables NOT in install questions - set defaults
 allowed_admin_ips="*"
 session_window_min="30"
 user_cookie_max_days="730"
 cookie_secure="1"
+rate_limit_window="60"
 rate_limit_window="60"
 
 #=================================================
