@@ -56,9 +56,9 @@ ram.runtime = "150M"
     ask.en = "Admin interface path"
     ask.fr = "Chemin de l'interface admin"
     type = "string"
-    default = "/derp"
-    help.en = "URL path for admin interface (e.g., /admin or /derp for obscurity)"
-    help.fr = "Chemin URL pour l'interface admin (ex: /admin ou /derp pour l'obscurité)"
+    default = "/webadmin"
+    help.en = "URL path for admin interface (e.g., /admin or /webadmin for obscurity)"
+    help.fr = "Chemin URL pour l'interface admin (ex: /admin ou /webadmin pour l'obscurité)"
 
     [install.root_redirect]
     ask.en = "Root redirect URL"

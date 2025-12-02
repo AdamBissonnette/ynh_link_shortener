@@ -10,7 +10,7 @@ source /usr/share/yunohost/helpers
 # Variables from install questions: admin_password, admin_path, root_redirect, not_found_redirect
 # These should already be set by YunoHost, but we'll ensure they have fallbacks
 admin_password="${admin_password:-changeme}"
-admin_path="${admin_path:-/derp}"
+admin_path="${admin_path:-/webadmin}"
 root_redirect="${root_redirect:-https://example.com}"
 not_found_redirect="${not_found_redirect:-https://example.com}"
 
