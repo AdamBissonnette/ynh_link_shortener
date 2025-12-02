@@ -13,10 +13,10 @@ maintainers = ["adam"]
 
 [upstream]
 license = "MIT"
-website = "https://github.com/AdamBissonnette/link_shortener"
-admindoc = "https://github.com/AdamBissonnette/link_shortener/blob/main/README.md"
-userdoc = "https://github.com/AdamBissonnette/link_shortener/blob/main/docs/QUICKSTART.md"
-code = "https://github.com/AdamBissonnette/link_shortener"
+website = "https://github.com/AdamBissonnette/linkshortener"
+admindoc = "https://github.com/AdamBissonnette/linkshortener/blob/main/README.md"
+userdoc = "https://github.com/AdamBissonnette/linkshortener/blob/main/docs/QUICKSTART.md"
+code = "https://github.com/AdamBissonnette/linkshortener"
 
 [integration]
 yunohost = ">= 12.1.17"
@@ -78,8 +78,8 @@ ram.runtime = "150M"
 
 [resources]
     [resources.sources.main]
-    url = "https://github.com/AdamBissonnette/link_shortener/archive/refs/tags/v1.0.0.tar.gz"
-    sha256 = "REPLACE_WITH_ACTUAL_SHA256"
+    url = "https://github.com/AdamBissonnette/linkshortener/archive/refs/tags/v1.0.0.tar.gz"
+    sha256 = "2b8a155acec5577df7a210531dff4bf493a73305daa75b6d07cb58c55976b63c"
     autoupdate.strategy = "latest_github_release"
 
     [resources.system_user]
