@@ -79,7 +79,7 @@ ram.runtime = "150M"
 [resources]
     [resources.sources.main]
     url = "https://github.com/AdamBissonnette/linkshortener/archive/refs/tags/v1.0.0.tar.gz"
-    sha256 = "0b004129e72596071708543e720865ffa18a209598b77361ce90d3016cb960e3"
+    sha256 = "e708670a09b211f82f9bc6cfc5e770747e87f1e5b78873db51bf94e16f44bad4"
     autoupdate.strategy = "latest_github_release"
 
     [resources.system_user]
