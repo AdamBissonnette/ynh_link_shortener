@@ -24,15 +24,22 @@ admin_path="/webadmin"
 root_redirect="https://www.example.com"
 not_found_redirect="https://www.example.com"
 
-ynh_app_setting_set --app="$app" --key=admin_password --value="$admin_password"
-ynh_app_setting_set --app="$app" --key=allowed_admin_ips --value="$allowed_admin_ips"
-ynh_app_setting_set --app="$app" --key=admin_path --value="$admin_path"
-ynh_app_setting_set --app="$app" --key=root_redirect --value="$root_redirect"
-ynh_app_setting_set --app="$app" --key=not_found_redirect --value="$not_found_redirect"
-ynh_app_setting_set --app="$app" --key=session_window_min --value="$session_window_min"
-ynh_app_setting_set --app="$app" --key=user_cookie_max_days --value="$user_cookie_max_days"
-ynh_app_setting_set --app="$app" --key=cookie_secure --value="$cookie_secure"
-ynh_app_setting_set --app="$app" --key=rate_limit_window --value="$rate_limit_window"
+#=================================================
+# INITIALIZE AND STORE SETTINGS
+#=================================================
+ynh_script_progression "Initiliazing settings..."
+ynh_app_setting_set --app=$app --key=admin_password --value=$admin_password
+ynh_app_setting_set --app=$app --key=allowed_admin_ips --value=$allowed_admin_ips
+ynh_app_setting_set --app=$app --key=admin_path --value=$admin_path
+ynh_app_setting_set --app=$app --key=root_redirect --value=$root_redirect
+ynh_app_setting_set --app=$app --key=not_found_redirect --value=$not_found_redirect
+ynh_app_setting_set --app=$app --key=session_window_min --value=$session_window_min
+ynh_app_setting_set --app=$app --key=user_cookie_max_days --value=$user_cookie_max_days
+ynh_app_setting_set --app=$app --key=cookie_secure --value=$cookie_secure
+ynh_app_setting_set --app=$app --key=rate_limit_window --value=$rate_limit_window
+
+ynh_script_progression "Values set [$allowed_admin_ips], [$admin_path], [$root_redirect], [$not_found_redirect], [$session_window_min], [$user_cookie_max_days], [$cookie_secure], [$rate_limit_window], [$admin_password]"
+
 
 #=================================================
 # INSTALL DEPENDENCIES

@@ -49,7 +49,6 @@ ram.runtime = "150M"
     ask.en = "Admin password for the web interface"
     ask.fr = "Mot de passe admin pour l'interface web"
     type = "password"
-    default = "changeme123!"
     help.en = "Password to access the admin dashboard"
     help.fr = "Mot de passe pour accéder au tableau de bord admin"
 
