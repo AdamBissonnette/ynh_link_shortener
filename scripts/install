@@ -6,40 +6,20 @@ source /usr/share/yunohost/helpers
 # RETRIEVE ARGUMENTS FROM THE MANIFEST
 #=================================================
 
-# Variables from install questions are automatically set by YunoHost:
-# - admin_password, admin_path, root_redirect, not_found_redirect
-# Variables NOT in install questions - set defaults here:
+# Explicitly set all variables (install questions provide some, we set defaults for others)
+# Variables from install questions: admin_password, admin_path, root_redirect, not_found_redirect
+# These should already be set by YunoHost, but we'll ensure they have fallbacks
+admin_password="changeme"
+admin_path="/webadmin"
+root_redirect="https://example.com"
+not_found_redirect="https://example.com"
+
+# Variables NOT in install questions - set defaults
 allowed_admin_ips="*"
 session_window_min="30"
 user_cookie_max_days="730"
 cookie_secure="1"
 rate_limit_window="60"
-
-#=================================================
-# STORE SETTINGS FOR CONFIG PANEL
-#=================================================
-admin_password=$(ynh_string_random)
-
-admin_path="/webadmin"
-root_redirect="https://www.example.com"
-not_found_redirect="https://www.example.com"
-
-#=================================================
-# INITIALIZE AND STORE SETTINGS
-#=================================================
-ynh_script_progression "Initiliazing settings..."
-ynh_app_setting_set --app=$app --key=admin_password --value=$admin_password
-ynh_app_setting_set --app=$app --key=allowed_admin_ips --value=$allowed_admin_ips
-ynh_app_setting_set --app=$app --key=admin_path --value=$admin_path
-ynh_app_setting_set --app=$app --key=root_redirect --value=$root_redirect
-ynh_app_setting_set --app=$app --key=not_found_redirect --value=$not_found_redirect
-ynh_app_setting_set --app=$app --key=session_window_min --value=$session_window_min
-ynh_app_setting_set --app=$app --key=user_cookie_max_days --value=$user_cookie_max_days
-ynh_app_setting_set --app=$app --key=cookie_secure --value=$cookie_secure
-ynh_app_setting_set --app=$app --key=rate_limit_window --value=$rate_limit_window
-
-ynh_script_progression "Values set [$allowed_admin_ips], [$admin_path], [$root_redirect], [$not_found_redirect], [$session_window_min], [$user_cookie_max_days], [$cookie_secure], [$rate_limit_window], [$admin_password]"
-
 
 #=================================================
 # INSTALL DEPENDENCIES
@@ -117,6 +97,19 @@ EOF
 
 chmod -R o-rwx "$install_dir"
 chown -R "$app:www-data" "$install_dir"
+
+#=================================================
+# STORE SETTINGS FOR CONFIG PANEL
+#=================================================
+ynh_app_setting_set --app="$app" --key=admin_password --value="$admin_password"
+ynh_app_setting_set --app="$app" --key=allowed_admin_ips --value="*"
+ynh_app_setting_set --app="$app" --key=admin_path --value="$admin_path"
+ynh_app_setting_set --app="$app" --key=root_redirect --value="$root_redirect"
+ynh_app_setting_set --app="$app" --key=not_found_redirect --value="$not_found_redirect"
+ynh_app_setting_set --app="$app" --key=session_window_min --value="30"
+ynh_app_setting_set --app="$app" --key=user_cookie_max_days --value="730"
+ynh_app_setting_set --app="$app" --key=cookie_secure --value="1"
+ynh_app_setting_set --app="$app" --key=rate_limit_window --value="60"
 
 #=================================================
 # SYSTEM CONFIGURATION
