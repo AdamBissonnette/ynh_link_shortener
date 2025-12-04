@@ -5,9 +5,9 @@ source /usr/share/yunohost/helpers
 #=================================================
 # RESTART SYSTEMD SERVICE AFTER CONFIG CHANGES
 #=================================================
-ynh_script_progression "Restarting $app's systemd service to apply configuration changes..."
+# ynh_script_progression "Restarting $app's systemd service to apply configuration changes..."
 
-ynh_systemctl --service="$app" --action="restart"
+# ynh_systemctl --service="$app" --action="restart"
 
 #=================================================
 # END OF SCRIPT
