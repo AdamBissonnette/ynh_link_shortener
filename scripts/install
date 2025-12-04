@@ -18,13 +18,13 @@ rate_limit_window="60"
 #=================================================
 # STORE SETTINGS FOR CONFIG PANEL
 #=================================================
-random_password=$(ynh_string_random)
+admin_password=$(ynh_string_random)
 
 admin_path="/webadmin"
 root_redirect="https://www.example.com"
 not_found_redirect="https://www.example.com"
 
-ynh_app_setting_set --app="$app" --key=admin_password --value="$random_password"
+ynh_app_setting_set --app="$app" --key=admin_password --value="$admin_password"
 ynh_app_setting_set --app="$app" --key=allowed_admin_ips --value="$allowed_admin_ips"
 ynh_app_setting_set --app="$app" --key=admin_path --value="$admin_path"
 ynh_app_setting_set --app="$app" --key=root_redirect --value="$root_redirect"
